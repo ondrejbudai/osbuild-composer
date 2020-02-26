@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+
+rm -rf rpmbuild
+mkdir rpmbuild
+
+BUILDDIR=$(mktemp -d -t osbuild-rpm-XXXXXXXXXX)
+
+git clone https://github.com/osbuild/osbuild.git "${BUILDDIR}"
+pushd "$BUILDDIR"
+
+make rpm
+
+popd
+
+cp "${BUILDDIR}"/rpmbuild/RPMS/noarch/*.rpm rpmbuild
+rm -rf "${BUILDDIR}"

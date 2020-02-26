@@ -86,3 +86,23 @@ rpm: $(RPM_SPECFILE) $(RPM_TARBALL)
 	rpmbuild -bb \
 		--define "_topdir $(CURDIR)/rpmbuild" \
 		$(RPM_SPECFILE)
+
+.PHONY: prune-rpm
+prune-rpm:
+	rm -rf rpmbuild
+
+.PHONY: vm-provision
+vm-provision:
+	vagrant destroy -f
+	tools/make-osbuild-rpm
+	vagrant up
+
+.PHONY: vm-install
+vm-install: prune-rpm rpm
+	vagrant rsync
+	vagrant ssh -c "sudo dnf remove -y golang-github-osbuild-composer*; sudo dnf install -y cockpit-composer /vagrant/rpmbuild/RPMS/x86_64/*.rpm"
+
+.PHONY: vm-test
+vm-test:
+	vagrant rsync
+	vagrant ssh -c "sudo systemctl start osbuild-composer.socket && sudo /vagrant/tools/run-tests"
