@@ -267,8 +267,8 @@ def append_filesystem(report, tree, *, is_ostree=False):
 
     elif len(glob.glob(f"{tree}/vmlinuz-*")) > 0:
         assert "bootmenu" not in report
-        with open(f"{tree}/grub2/grubenv") as f:
-            report["boot-environment"] = parse_environment_vars(f.read())
+        # with open(f"{tree}/grub2/grubenv") as f:
+        #     report["boot-environment"] = parse_environment_vars(f.read())
         report["bootmenu"] = read_boot_entries(tree)
     elif len(glob.glob(f"{tree}/EFI")):
         print("EFI partition", file=sys.stderr)

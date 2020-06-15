@@ -37,19 +37,20 @@ type architecture struct {
 }
 
 type imageType struct {
-	arch             *architecture
-	name             string
-	filename         string
-	mimeType         string
-	packages         []string
-	excludedPackages []string
-	enabledServices  []string
-	disabledServices []string
-	kernelOptions    string
-	bootable         bool
-	rpmOstree        bool
-	defaultSize      uint64
-	assembler        func(uefi bool, options distro.ImageOptions, arch distro.Arch) *osbuild.Assembler
+	arch                  *architecture
+	name                  string
+	filename              string
+	mimeType              string
+	packages              []string
+	excludedPackages      []string
+	enabledServices       []string
+	disabledServices      []string
+	kernelOptions         string
+	bootable              bool
+	rpmOstree             bool
+	defaultSize           uint64
+	assembler             func(uefi bool, options distro.ImageOptions, arch distro.Arch) *osbuild.Assembler
+	extraPreSelinuxStages []*osbuild.Stage
 }
 
 func (a *architecture) Distro() distro.Distro {
@@ -277,6 +278,10 @@ func (t *imageType) pipeline(c *blueprint.Customizations, options distro.ImageOp
 
 	if firewall := c.GetFirewall(); firewall != nil {
 		p.AddStage(osbuild.NewFirewallStage(t.firewallStageOptions(firewall)))
+	}
+
+	for _, extraStage := range t.extraPreSelinuxStages {
+		p.AddStage(extraStage)
 	}
 
 	p.AddStage(osbuild.NewSELinuxStage(t.selinuxStageOptions()))
@@ -763,6 +768,53 @@ func New() distro.Distro {
 		},
 	}
 
+	minimalImgType := imageType{
+		name:     "minimal",
+		filename: "disk.raw",
+		mimeType: "application/octet-stream",
+		packages: []string{
+			"@core",
+			"@standard",
+			"@hardware-support",
+			"zram",
+			"kernel",
+			"dracut-config-generic",
+			"@arm-tools",
+			"rng-tools",
+			"chrony",
+			"extlinux-bootloader",
+			"bcm283x-firmware",
+			"initial-setup",
+			"initial-setup-gui",
+			"glibc-all-langpacks",
+		},
+		excludedPackages: []string{
+			"dracut-config-rescue",
+			"uboot-images-armv8",
+			"iwl*",
+			"ipw*",
+			"usb_modeswitch",
+		},
+		enabledServices: []string{
+			"sshd",
+			"NetworkManager",
+			"chronyd",
+			"initial-setup",
+			"zram-swap",
+		},
+		kernelOptions: "ro biosdevname=0 net.ifnames=0",
+		bootable:      true,
+		defaultSize:   6 * GigaByte,
+		extraPreSelinuxStages: []*osbuild.Stage{
+			osbuild.NewScriptStage(osbuild.NewScriptStageOptions("cp -P /usr/share/uboot/rpi_2/u-boot.bin /boot/efi/rpi2-u-boot.bin")),
+			osbuild.NewScriptStage(osbuild.NewScriptStageOptions("cp -P /usr/share/uboot/rpi_3_32b/u-boot.bin /boot/efi/rpi3-u-boot.bin")),
+			osbuild.NewScriptStage(osbuild.NewScriptStageOptions("cp -P /usr/share/uboot/rpi_4_32b/u-boot.bin /boot/efi/rpi4-u-boot.bin")),
+		},
+		assembler: func(uefi bool, options distro.ImageOptions, arch distro.Arch) *osbuild.Assembler {
+			return qemuAssembler("raw", "disk.raw", uefi, options)
+		},
+	}
+
 	r := distribution{
 		imageTypes: map[string]imageType{},
 		buildPackages: []string{
@@ -813,6 +865,7 @@ func New() distro.Distro {
 		amiImgType,
 		qcow2ImageType,
 		openstackImgType,
+		minimalImgType,
 	)
 
 	r.setArches(x8664, aarch64)

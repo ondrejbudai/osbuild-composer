@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+
 	"github.com/osbuild/osbuild-composer/internal/blueprint"
 	"github.com/osbuild/osbuild-composer/internal/common"
 	"github.com/osbuild/osbuild-composer/internal/distro"
@@ -337,6 +338,7 @@ var imageTypeCompatMapping = map[string]string{
 	"tar":               "Tar",
 	"fedora-iot-commit": "fedora-iot-commit",
 	"rhel-edge-commit":  "rhel-edge-commit",
+	"minimal":           "minimal",
 	"test_type":         "test_type",         // used only in json_test.go
 	"test_type_invalid": "test_type_invalid", // used only in json_test.go
 }
