@@ -242,11 +242,11 @@ func TearDownTemporaryRepository(dir string) error {
 // on environment variables specified by Jenkins
 // note: in case of migration to sth else like Github Actions, change it to whatever variables GH Action provides
 func GenerateCIArtifactName(prefix string) (string, error) {
-	distroCode := os.Getenv("DISTRO_CODE")
+	distroCode := os.Getenv("TARGET_DISTRO_CODE")
 	branchName := os.Getenv("BRANCH_NAME")
 	buildId := os.Getenv("BUILD_ID")
 	if branchName == "" || buildId == "" || distroCode == "" {
-		return "", fmt.Errorf("The environment variables must specify BRANCH_NAME, BUILD_ID, and DISTRO_CODE")
+		return "", fmt.Errorf("The environment variables must specify BRANCH_NAME, BUILD_ID, and TARGET_DISTRO_CODE")
 	}
 
 	arch := common.CurrentArch()

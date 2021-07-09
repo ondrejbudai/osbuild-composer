@@ -17,7 +17,7 @@ set -euxo pipefail
 source /usr/libexec/osbuild-composer-test/set-env-variables.sh
 
 #TODO: remove this once there is rhel9 support for necessary image types
-if [[ $DISTRO_CODE == rhel_90 ]]; then
+if [[ $TARGET_DISTRO_CODE == rhel_90 ]]; then
     echo "Skipped"
     exit 0
 fi
@@ -322,7 +322,7 @@ SSH_USER=
 JENKINS_HOME="${JENKINS_HOME:-}"
 if [[ -n "$JENKINS_HOME" ]]; then
   # in Jenkins, imitate GenerateCIArtifactName() from internal/test/helpers.go
-  TEST_ID="$DISTRO_CODE-$ARCH-$BRANCH_NAME-$BUILD_ID"
+  TEST_ID="$TARGET_DISTRO_CODE-$ARCH-$BRANCH_NAME-$BUILD_ID"
 else
   # if not running in Jenkins, generate ID not relying on specific env variables
   TEST_ID=$(uuidgen);

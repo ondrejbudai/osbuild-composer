@@ -22,7 +22,7 @@ fi
 
 # Skip 'selinux/contect-mismatch' part of the image-info report on RHEL-8.
 # https://bugzilla.redhat.com/show_bug.cgi?id=1973754
-if [[ "${DISTRO_CODE}" =~ "rhel_8" ]]; then
+if [[ "${TARGET_DISTRO_CODE}" =~ "rhel_8" ]]; then
     IMAGE_TEST_CASE_RUNNER="${IMAGE_TEST_CASE_RUNNER} -skip-selinux-ctx-check"
 fi
 
@@ -36,7 +36,7 @@ test_divider () {
 
 # Get a list of test cases.
 get_test_cases () {
-    TEST_CASE_SELECTOR="${DISTRO_CODE}-${ARCH}"
+    TEST_CASE_SELECTOR="${TARGET_DISTRO_CODE}-${ARCH}"
     pushd $IMAGE_TEST_CASES_PATH > /dev/null
         ls "$TEST_CASE_SELECTOR"*.json
     popd > /dev/null
@@ -53,7 +53,7 @@ run_test_case () {
     echo "🏃🏻 Running test: ${TEST_NAME}"
     test_divider
 
-    TEST_CMD="env BRANCH_NAME=${BRANCH_NAME-main} BUILD_ID=$BUILD_ID DISTRO_CODE=$DISTRO_CODE $TEST_RUNNER -test.v ${IMAGE_TEST_CASES_PATH}/${TEST_CASE_FILENAME}"
+    TEST_CMD="env BRANCH_NAME=${BRANCH_NAME-main} BUILD_ID=$BUILD_ID TARGET_DISTRO_CODE=$TARGET_DISTRO_CODE $TEST_RUNNER -test.v ${IMAGE_TEST_CASES_PATH}/${TEST_CASE_FILENAME}"
 
     # Run the test and add the test name to the list of passed or failed
     # tests depending on the result.

@@ -15,7 +15,7 @@ function greenprint {
 /usr/libexec/osbuild-composer-test/provision.sh
 
 greenprint "Defining distro selector"
-DISTRO_SELECTOR="${DISTRO_CODE//_/-}"
+DISTRO_SELECTOR="${TARGET_DISTRO_CODE//_/-}"
 
 greenprint "Starting containers"
 sudo /usr/libexec/osbuild-composer-test/run-koji-container.sh start

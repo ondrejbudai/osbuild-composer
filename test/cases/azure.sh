@@ -12,7 +12,7 @@ function greenprint {
 }
 
 #TODO: Remove this once there is rhel9 support for Azure image type
-if [[ $DISTRO_CODE == rhel_90 ]]; then
+if [[ $TARGET_DISTRO_CODE == rhel_90 ]]; then
     greenprint "Skipped"
     exit 0
 fi
@@ -52,7 +52,7 @@ sudo dnf config-manager --add-repo https://rpm.releases.hashicorp.com/$release/h
 sudo dnf install -y terraform
 
 ARCH=$(uname -m)
-TEST_ID="$DISTRO_CODE-$ARCH-$BRANCH_NAME-$BUILD_ID"
+TEST_ID="$TARGET_DISTRO_CODE-$ARCH-$BRANCH_NAME-$BUILD_ID"
 IMAGE_KEY=image-${TEST_ID}
 
 # Jenkins sets WORKSPACE to the job workspace, but if this script runs
