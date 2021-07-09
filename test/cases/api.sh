@@ -17,7 +17,7 @@ set -euxo pipefail
 source /usr/libexec/osbuild-composer-test/set-env-variables.sh
 
 #TODO: remove this once there is rhel9 support for necessary image types
-if [[ $TARGET_DISTRO_CODE == rhel_90 ]]; then
+if [[ $TARGET_DISTRO_CODE == rhel-90 ]]; then
     echo "Skipped"
     exit 0
 fi
