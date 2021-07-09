@@ -83,7 +83,7 @@ COMPOSE_INFO=${TEMPDIR}/compose-info-${IMAGE_KEY}.json
 SSH_OPTIONS=(-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=5)
 SSH_KEY=${OSBUILD_COMPOSER_TEST_DATA}keyring/id_rsa
 
-case "${ID}-${VERSION_ID}" in
+case "${TARGET_DISTRO_ID}-${VERSION_ID}" in
     "rhel-8.4")
         CONTAINER_TYPE=rhel-edge-container
         CONTAINER_FILENAME=rhel84-container.tar
@@ -97,7 +97,7 @@ case "${ID}-${VERSION_ID}" in
         INSTALLER_FILENAME=installer.iso
         ;;
     *)
-        echo "unsupported distro: ${ID}-${VERSION_ID}"
+        echo "unsupported distro: ${TARGET_DISTRO_ID}-${VERSION_ID}"
         exit 1;;
 esac
 

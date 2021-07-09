@@ -45,7 +45,7 @@ case $CLOUD_PROVIDER in
     ;;
   "$CLOUD_PROVIDER_GCP")
     echo "Testing Google Cloud Platform"
-    if [[ $ID == fedora ]]; then
+    if [[ $TARGET_DISTRO_ID == fedora ]]; then
         echo "Skipped, Fedora isn't supported by GCP"
         exit 0
     fi
@@ -55,7 +55,7 @@ case $CLOUD_PROVIDER in
     ;;
   "$CLOUD_PROVIDER_AWS_S3")
     echo "Testing S3 bucket upload"
-    if [[ $ID != "rhel" ]]; then
+    if [[ $TARGET_DISTRO_ID != "rhel" ]]; then
         echo "Skipped. S3 upload test is only tested on RHEL (testing only image type: rhel-edge-commit)."
         exit 0
     fi
@@ -101,7 +101,7 @@ case $CLOUD_PROVIDER in
     checkEnvAzure
     ;;
 esac
-[[ "$ID" == "rhel" ]] && checkEnvSubscription
+[[ "$TARGET_DISTRO_ID" == "rhel" ]] && checkEnvSubscription
 
 #
 # Create a temporary directory and ensure it gets deleted when this script
@@ -328,7 +328,7 @@ else
   TEST_ID=$(uuidgen);
 fi
 
-case "$ID-$VERSION_ID" in
+case "$TARGET_ID-$TARGET_VERSION_ID" in
   "rhel-8.4")
     DISTRO="rhel-84"
     SSH_USER="cloud-user"
@@ -348,7 +348,7 @@ case "$ID-$VERSION_ID" in
 esac
 
 # Only RHEL need subscription block.
-if [[ "$ID" == "rhel" ]]; then
+if [[ "$TARGET_DISTRO_ID" == "rhel" ]]; then
   SUBSCRIPTION_BLOCK=$(cat <<EndOfMessage
 ,
     "subscription": {
@@ -691,7 +691,7 @@ function _instanceCheck() {
   $_ssh rpm -q postgresql
 
   # Verify subscribe status. Loop check since the system may not be registered such early(RHEL only)
-  if [[ "$ID" == "rhel" ]]; then
+  if [[ "$TARGET_DISTRO_ID" == "rhel" ]]; then
     set +eu
     for LOOP_COUNTER in {1..10}; do
         subscribe_org_id=$($_ssh sudo subscription-manager identity | grep 'org ID')

@@ -10,9 +10,9 @@ function greenprint {
 source tools/set-env-variables.sh
 
 # Mock configuration file to use for building RPMs.
-MOCK_CONFIG="${ID}-${VERSION_ID%.*}-$(uname -m)"
+MOCK_CONFIG="${TARGET_DISTRO_ID}-${TARGET_DISTRO_VERSION_ID%.*}-$(uname -m)"
 
-if [[ $ID == centos ]]; then
+if [[ $TARGET_DISTRO_ID == centos ]]; then
   MOCK_CONFIG="centos-stream-8-$(uname -m)"
 fi
 
@@ -27,7 +27,7 @@ MOCK_REPO_BASE_URL="http://osbuild-composer-repos.s3-website.us-east-2.amazonaws
 
 # Relative path of the repository – used for constructing both the local and
 # remote paths below, so that they're consistent.
-REPO_PATH=osbuild-composer/${ID}-${VERSION_ID}/${ARCH}/${COMMIT}
+REPO_PATH=osbuild-composer/${TARGET_DISTRO_ID}-${TARGET_DISTRO_VERSION_ID}/${ARCH}/${COMMIT}
 
 # Directory to hold the RPMs temporarily before we upload them.
 REPO_DIR=repo/${REPO_PATH}

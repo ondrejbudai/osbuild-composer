@@ -39,7 +39,7 @@ function setup_repo {
   sudo tee "/etc/yum.repos.d/${project}.repo" << EOF
 [${project}]
 name=${project} ${commit}
-baseurl=http://osbuild-composer-repos.s3-website.us-east-2.amazonaws.com/${project}/${ID}-${VERSION_ID}/${ARCH}/${commit}
+baseurl=http://osbuild-composer-repos.s3-website.us-east-2.amazonaws.com/${project}/${TARGET_DISTRO_ID}-${TARGET_DISTRO_VERSION_ID}/${ARCH}/${commit}
 enabled=1
 gpgcheck=0
 priority=${priority}
@@ -63,18 +63,18 @@ GIT_COMMIT="${GIT_COMMIT:-${CI_COMMIT_SHA}}"
 
 setup_repo osbuild-composer "${GIT_COMMIT}" 5
 
-OSBUILD_GIT_COMMIT=$(cat Schutzfile | jq -r '.["'"${ID}-${VERSION_ID}"'"].dependencies.osbuild.commit')
+OSBUILD_GIT_COMMIT=$(cat Schutzfile | jq -r '.["'"${TARGET_DISTRO_ID}-${TARGET_DISTRO_VERSION_ID}"'"].dependencies.osbuild.commit')
 if [[ "${OSBUILD_GIT_COMMIT}" != "null" ]]; then
   setup_repo osbuild "${OSBUILD_GIT_COMMIT}" 10
 fi
 
 if [[ "$PROJECT" != "osbuild-composer" ]]; then
-  PROJECT_COMMIT=$(jq -r ".[\"${ID}-${VERSION_ID}\"].dependants[\"${PROJECT}\"].commit" Schutzfile)
+  PROJECT_COMMIT=$(jq -r ".[\"${TARGET_DISTRO_ID}-${TARGET_DISTRO_VERSION_ID}\"].dependants[\"${PROJECT}\"].commit" Schutzfile)
   setup_repo "${PROJECT}" "${PROJECT_COMMIT}" 10
 
   # Get a list of packages needed to be preinstalled before "${PROJECT}-tests".
   # Useful mainly for EPEL.
-  PRE_INSTALL_PACKAGES=$(jq -r ".[\"${ID}-${VERSION_ID}\"].dependants[\"${PROJECT}\"].pre_install_packages[]?" Schutzfile)
+  PRE_INSTALL_PACKAGES=$(jq -r ".[\"${TARGET_DISTRO_ID}-${TARGET_DISTRO_VERSION_ID}\"].dependants[\"${PROJECT}\"].pre_install_packages[]?" Schutzfile)
 
   if [ "${PRE_INSTALL_PACKAGES}" ]; then
     # shellcheck disable=SC2086 # We need to pass multiple arguments here.

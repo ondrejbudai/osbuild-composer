@@ -11,7 +11,7 @@ source /usr/libexec/osbuild-composer-test/set-env-variables.sh
 /usr/libexec/osbuild-composer-test/provision.sh
 
 # Set os-variant and boot location used by virt-install.
-case "${ID}-${VERSION_ID}" in
+case "${TARGET_DISTRO_ID}-${TARGET_DISTRO_VERSION_ID}" in
     "fedora-33")
         IMAGE_TYPE=fedora-iot-commit
         OSTREE_REF="fedora/33/${ARCH}/iot"
@@ -37,7 +37,7 @@ case "${ID}-${VERSION_ID}" in
         USER_IN_COMMIT="true"
         BOOT_LOCATION="$COMPOSE_URL/compose/BaseOS/x86_64/os/";;
     *)
-        echo "unsupported distro: ${ID}-${VERSION_ID}"
+        echo "unsupported distro: ${TARGET_DISTRO_ID}-${TARGET_DISTRO_VERSION_ID}"
         exit 1;;
 esac
 

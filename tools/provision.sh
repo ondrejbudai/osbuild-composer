@@ -52,7 +52,7 @@ sudo mkdir -p /etc/osbuild-composer/repositories
 sudo cp -a /usr/share/tests/osbuild-composer/repositories/{fedora,centos}-*.json \
     /etc/osbuild-composer/repositories/
 # RHEL nightly repos need to be overridden in rhel-8.json and rhel-8-beta.json
-case "${ID}-${VERSION_ID}" in
+case "${TARGET_DISTRO_ID}-${TARGET_DISTRO_VERSION_ID}" in
     "rhel-8.4")
         # Override old rhel-8.json and rhel-8-beta.json because RHEL 8.4 test needs nightly repos
         sudo cp /usr/share/tests/osbuild-composer/repositories/rhel-84.json /etc/osbuild-composer/repositories/rhel-8.json

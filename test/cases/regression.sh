@@ -8,7 +8,7 @@ source /usr/libexec/osbuild-composer-test/set-env-variables.sh
 /usr/libexec/osbuild-composer-test/provision.sh
 
 # Set os-variant and boot location used by virt-install.
-case "${ID}" in
+case "${TARGET_DISTRO_ID}" in
     "fedora")
         echo "No regression test for Fedora";;
     "rhel")
@@ -16,5 +16,5 @@ case "${ID}" in
     "centos")
         /usr/libexec/tests/osbuild-composer/regression-include-excluded-packages.sh;;
     *)
-        echo "unsupported distro: ${ID}-${VERSION_ID}"
+        echo "unsupported distro: ${TARGET_DISTRO_ID}-${TARGET_DISTRO_VERSION_ID}"
 esac
