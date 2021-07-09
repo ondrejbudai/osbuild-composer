@@ -10,7 +10,7 @@ function greenprint {
     echo -e "\033[1;32m${1}\033[0m"
 }
 
-if [ "$ID" != "rhel" ]; then
+if [ "$TARGET_DISTRO_ID" != "rhel" ]; then
     greenprint "VMware test not supported on $ID"
     exit 0
 fi
@@ -69,7 +69,7 @@ running_test_check () {
 # Get the compose log.
 get_compose_log () {
     COMPOSE_ID=$1
-    LOG_FILE=${WORKSPACE}/osbuild-${ID}-${VERSION_ID}-vmware.log
+    LOG_FILE=${WORKSPACE}/osbuild-vmware.log
 
     # Download the logs.
     sudo composer-cli compose log "$COMPOSE_ID" | tee "$LOG_FILE" > /dev/null
@@ -78,7 +78,7 @@ get_compose_log () {
 # Get the compose metadata.
 get_compose_metadata () {
     COMPOSE_ID=$1
-    METADATA_FILE=${WORKSPACE}/osbuild-${ID}-${VERSION_ID}-vmware.json
+    METADATA_FILE=${WORKSPACE}/osbuild-vmware.json
 
     # Download the metadata.
     sudo composer-cli compose metadata "$COMPOSE_ID" > /dev/null

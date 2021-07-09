@@ -63,7 +63,7 @@ smoke_test_check () {
 # Get the compose log.
 get_compose_log () {
     COMPOSE_ID=$1
-    LOG_FILE=${WORKSPACE}/osbuild-${ID}-${VERSION_ID}-aws.log
+    LOG_FILE=${WORKSPACE}/osbuild-aws.log
 
     # Download the logs.
     sudo composer-cli compose log "$COMPOSE_ID" | tee "$LOG_FILE" > /dev/null
@@ -72,7 +72,7 @@ get_compose_log () {
 # Get the compose metadata.
 get_compose_metadata () {
     COMPOSE_ID=$1
-    METADATA_FILE=${WORKSPACE}/osbuild-${ID}-${VERSION_ID}-aws.json
+    METADATA_FILE=${WORKSPACE}/osbuild-aws.json
 
     # Download the metadata.
     sudo composer-cli compose metadata "$COMPOSE_ID" > /dev/null
@@ -90,7 +90,7 @@ get_compose_metadata () {
 store_instance_screenshot () {
     INSTANCE_ID=${1}
     LOOP_COUNTER=${2}
-    SCREENSHOT_FILE=${WORKSPACE}/console-screenshot-${ID}-${VERSION_ID}-${LOOP_COUNTER}.jpg
+    SCREENSHOT_FILE=${WORKSPACE}/console-screenshot-${LOOP_COUNTER}.jpg
 
     $AWS_CMD ec2 get-console-screenshot --instance-id "${1}" > "$INSTANCE_CONSOLE"
     jq -r '.ImageData' "$INSTANCE_CONSOLE" | base64 -d - > "$SCREENSHOT_FILE"

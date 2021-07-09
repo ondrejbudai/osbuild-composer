@@ -38,10 +38,10 @@ gpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.re
 fi
 
 # We need terraform to provision the vm in azure and then destroy it
-if [ "$ID" == "rhel" ] || [ "$ID" == "centos" ]
+if [ "$TARGET_DISTRO_ID" == "rhel" ] || [ "$TARGET_DISTRO_ID" == "centos" ]
 then
     release="RHEL"
-elif [ "$ID" == "fedora" ]
+elif [ "$TARGET_DISTRO_ID" == "fedora" ]
 then
     release="fedora"
 else
@@ -81,7 +81,7 @@ smoke_test_check () {
 # Get the compose log.
 get_compose_log () {
     COMPOSE_ID=$1
-    LOG_FILE=${WORKSPACE}/osbuild-${ID}-${VERSION_ID}-azure.log
+    LOG_FILE=${WORKSPACE}/osbuild-azure.log
 
     # Download the logs.
     sudo composer-cli compose log "$COMPOSE_ID" | tee "$LOG_FILE" > /dev/null
@@ -90,7 +90,7 @@ get_compose_log () {
 # Get the compose metadata.
 get_compose_metadata () {
     COMPOSE_ID=$1
-    METADATA_FILE=${WORKSPACE}/osbuild-${ID}-${VERSION_ID}-azure.json
+    METADATA_FILE=${WORKSPACE}/osbuild-azure.json
 
     # Download the metadata.
     sudo composer-cli compose metadata "$COMPOSE_ID" > /dev/null
