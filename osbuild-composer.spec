@@ -44,46 +44,58 @@ BuildRequires:  systemd-rpm-macros
 BuildRequires:  git
 # DO NOT REMOVE the BUNDLE_START and BUNDLE_END markers as they are used by 'tools/rpm_spec_add_provides_bundle.sh' to generate the Provides: bundled list
 # BUNDLE_START
-Provides: bundled(golang(cloud.google.com/go/cloudbuild)) = v1.2.0
-Provides: bundled(golang(cloud.google.com/go/compute)) = v1.6.1
-Provides: bundled(golang(cloud.google.com/go/storage)) = v1.22.0
-Provides: bundled(golang(github.com/aws/aws_sdk_go)) = v1.44.4
-Provides: bundled(golang(github.com/Azure/azure_pipeline_go)) = v0.2.3
-Provides: bundled(golang(github.com/Azure/azure_sdk_for_go)) = v63.4.0+incompatible
-Provides: bundled(golang(github.com/Azure/azure_storage_blob_go)) = v0.14.0
-Provides: bundled(golang(github.com/Azure/go_autorest/autorest)) = v0.11.27
-Provides: bundled(golang(github.com/Azure/go_autorest/autorest/azure/auth)) = v0.5.11
-Provides: bundled(golang(github.com/Azure/go_autorest/autorest/to)) = v0.4.0
-Provides: bundled(golang(github.com/Azure/go_autorest/autorest/validation)) = v0.3.1
-Provides: bundled(golang(github.com/BurntSushi/toml)) = v1.1.0
-Provides: bundled(golang(github.com/coreos/go_semver)) = v0.3.0
-Provides: bundled(golang(github.com/coreos/go_systemd)) = v0.0.0_20190719114852_fd7a80b32e1f
-Provides: bundled(golang(github.com/deepmap/oapi_codegen)) = v1.8.2
-Provides: bundled(golang(github.com/getkin/kin_openapi)) = v0.93.0
-Provides: bundled(golang(github.com/go_openapi/swag)) = v0.21.1
-Provides: bundled(golang(github.com/gobwas/glob)) = v0.2.3
-Provides: bundled(golang(github.com/golang_jwt/jwt/v4)) = v4.4.1
-Provides: bundled(golang(github.com/golang/groupcache)) = v0.0.0_20210331224755_41bb18bfe9da
-Provides: bundled(golang(github.com/google/go_cmp)) = v0.5.8
-Provides: bundled(golang(github.com/google/uuid)) = v1.3.0
-Provides: bundled(golang(github.com/gophercloud/gophercloud)) = v0.24.0
-Provides: bundled(golang(github.com/hashicorp/go_retryablehttp)) = v0.7.1
-Provides: bundled(golang(github.com/jackc/pgtype)) = v1.11.0
-Provides: bundled(golang(github.com/jackc/pgx/v4)) = v4.16.0
-Provides: bundled(golang(github.com/julienschmidt/httprouter)) = v1.3.0
-Provides: bundled(golang(github.com/kolo/xmlrpc)) = v0.0.0_20201022064351_38db28db192b
-Provides: bundled(golang(github.com/labstack/echo/v4)) = v4.7.2
-Provides: bundled(golang(github.com/labstack/gommon)) = v0.3.1
-Provides: bundled(golang(github.com/openshift_online/ocm_sdk_go)) = v0.1.266
-Provides: bundled(golang(github.com/oracle/oci_go_sdk/v54)) = v54.0.0
-Provides: bundled(golang(github.com/prometheus/client_golang)) = v1.12.1
-Provides: bundled(golang(github.com/segmentio/ksuid)) = v1.0.4
-Provides: bundled(golang(github.com/sirupsen/logrus)) = v1.8.1
-Provides: bundled(golang(github.com/spf13/cobra)) = v1.4.0
-Provides: bundled(golang(github.com/stretchr/testify)) = v1.7.1
-Provides: bundled(golang(github.com/ubccr/kerby)) = v0.0.0_20170626144437_201a958fc453
-Provides: bundled(golang(github.com/vmware/govmomi)) = v0.28.0
+#Provides: bundled(golang(cloud.google.com/go/cloudbuild)) = v1.2.0
+#Provides: bundled(golang(cloud.google.com/go/compute)) = v1.6.1
+#Provides: bundled(golang(cloud.google.com/go/storage)) = v1.22.0
+#Provides: bundled(golang(github.com/aws/aws_sdk_go)) = v1.44.4
+#Provides: bundled(golang(github.com/Azure/azure_pipeline_go)) = v0.2.3
+#Provides: bundled(golang(github.com/Azure/azure_sdk_for_go)) = v63.4.0+incompatible
+#Provides: bundled(golang(github.com/Azure/azure_storage_blob_go)) = v0.14.0
+#Provides: bundled(golang(github.com/Azure/go_autorest/autorest)) = v0.11.27
+#Provides: bundled(golang(github.com/Azure/go_autorest/autorest/azure/auth)) = v0.5.11
+#Provides: bundled(golang(github.com/Azure/go_autorest/autorest/to)) = v0.4.0
+#Provides: bundled(golang(github.com/Azure/go_autorest/autorest/validation)) = v0.3.1
+#Provides: bundled(golang(github.com/BurntSushi/toml)) = v1.1.0
+#Provides: bundled(golang(github.com/coreos/go_semver)) = v0.3.0
+#Provides: bundled(golang(github.com/coreos/go_systemd)) = v0.0.0_20190719114852_fd7a80b32e1f
+#Provides: bundled(golang(github.com/deepmap/oapi_codegen)) = v1.8.2
+#Provides: bundled(golang(github.com/getkin/kin_openapi)) = v0.93.0
+#Provides: bundled(golang(github.com/go_openapi/swag)) = v0.21.1
+#Provides: bundled(golang(github.com/gobwas/glob)) = v0.2.3
+#Provides: bundled(golang(github.com/golang_jwt/jwt/v4)) = v4.4.1
+#Provides: bundled(golang(github.com/golang/groupcache)) = v0.0.0_20210331224755_41bb18bfe9da
+#Provides: bundled(golang(github.com/google/go_cmp)) = v0.5.8
+#Provides: bundled(golang(github.com/google/uuid)) = v1.3.0
+#Provides: bundled(golang(github.com/gophercloud/gophercloud)) = v0.24.0
+#Provides: bundled(golang(github.com/hashicorp/go_retryablehttp)) = v0.7.1
+#Provides: bundled(golang(github.com/jackc/pgtype)) = v1.11.0
+#Provides: bundled(golang(github.com/jackc/pgx/v4)) = v4.16.0
+#Provides: bundled(golang(github.com/julienschmidt/httprouter)) = v1.3.0
+#Provides: bundled(golang(github.com/kolo/xmlrpc)) = v0.0.0_20201022064351_38db28db192b
+#Provides: bundled(golang(github.com/labstack/echo/v4)) = v4.7.2
+#Provides: bundled(golang(github.com/labstack/gommon)) = v0.3.1
+#Provides: bundled(golang(github.com/openshift_online/ocm_sdk_go)) = v0.1.266
+#Provides: bundled(golang(github.com/oracle/oci_go_sdk/v54)) = v54.0.0
+#Provides: bundled(golang(github.com/prometheus/client_golang)) = v1.12.1
+#Provides: bundled(golang(github.com/segmentio/ksuid)) = v1.0.4
+#Provides: bundled(golang(github.com/sirupsen/logrus)) = v1.8.1
+#Provides: bundled(golang(github.com/spf13/cobra)) = v1.4.0
+#Provides: bundled(golang(github.com/stretchr/testify)) = v1.7.1
+#Provides: bundled(golang(github.com/ubccr/kerby)) = v0.0.0_20170626144437_201a958fc453
+#Provides: bundled(golang(github.com/vmware/govmomi)) = v0.28.0
 # BUNDLE_END
+
+%{lua:
+pid = posix.fork()
+if pid == 0 then
+    print(posix.exec("bash", "tools/rpm_spec_add_provides_bundle.sh"))
+elseif pid > 0 then
+    posix.wait(pid)
+end
+}
+
+%include bundled-provides.spec
+
 %endif
 
 Requires: %{name}-core = %{version}-%{release}
@@ -114,6 +126,7 @@ Obsoletes: osbuild-composer-koji <= 23
 %forgeautosetup -p1
 %else
 %goprep -k
+
 %endif
 
 %build
