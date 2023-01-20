@@ -5,9 +5,9 @@ go 1.16
 exclude github.com/mattn/go-sqlite3 v2.0.3+incompatible
 
 require (
-	cloud.google.com/go/cloudbuild v1.2.0
-	cloud.google.com/go/compute v1.10.0
-	cloud.google.com/go/storage v1.26.0
+	cloud.google.com/go/cloudbuild v1.4.0
+	cloud.google.com/go/compute v1.14.0
+	cloud.google.com/go/storage v1.29.0
 	github.com/Azure/azure-pipeline-go v0.2.3
 	github.com/Azure/azure-sdk-for-go v66.0.0+incompatible
 	github.com/Azure/azure-storage-blob-go v0.13.0
@@ -42,13 +42,13 @@ require (
 	github.com/segmentio/ksuid v1.0.4
 	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/cobra v1.5.0
-	github.com/stretchr/testify v1.8.0
+	github.com/stretchr/testify v1.8.1
 	github.com/ubccr/kerby v0.0.0-20170626144437-201a958fc453
 	github.com/vmware/govmomi v0.29.0
-	golang.org/x/oauth2 v0.0.0-20220909003341-f21342109be1
-	golang.org/x/sync v0.0.0-20220601150217-0de741cfad7f
+	golang.org/x/oauth2 v0.0.0-20221014153046-6fdb5e3db783
+	golang.org/x/sync v0.1.0
 	golang.org/x/sys v0.0.0-20220728004956-3c1f35247d10
-	google.golang.org/api v0.97.0
-	google.golang.org/genproto v0.0.0-20220915135415-7fd63a7952de
+	google.golang.org/api v0.106.0
+	google.golang.org/genproto v0.0.0-20230110181048-76db0878b65f
 	gopkg.in/ini.v1 v1.67.0
 )
