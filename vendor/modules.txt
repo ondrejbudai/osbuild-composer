@@ -268,9 +268,8 @@ github.com/docker/go-metrics
 github.com/docker/go-units
 # github.com/dougm/pretty v0.0.0-20171025230240-2ee9d7453c02
 github.com/dougm/pretty
-# github.com/getkin/kin-openapi v0.93.0
+# github.com/getkin/kin-openapi v0.113.0
 ## explicit
-github.com/getkin/kin-openapi/jsoninfo
 github.com/getkin/kin-openapi/openapi3
 github.com/getkin/kin-openapi/openapi3filter
 github.com/getkin/kin-openapi/routers
@@ -359,6 +358,8 @@ github.com/hashicorp/go-multierror
 github.com/hashicorp/go-retryablehttp
 # github.com/inconshreveable/mousetrap v1.0.0
 github.com/inconshreveable/mousetrap
+# github.com/invopop/yaml v0.1.0
+github.com/invopop/yaml
 # github.com/jackc/chunkreader/v2 v2.0.1
 github.com/jackc/chunkreader/v2
 # github.com/jackc/pgconn v1.13.0
@@ -428,7 +429,7 @@ github.com/letsencrypt/boulder/identifier
 github.com/letsencrypt/boulder/probs
 github.com/letsencrypt/boulder/revocation
 github.com/letsencrypt/boulder/sa/proto
-# github.com/mailru/easyjson v0.7.6
+# github.com/mailru/easyjson v0.7.7
 github.com/mailru/easyjson/buffer
 github.com/mailru/easyjson/jlexer
 github.com/mailru/easyjson/jwriter
@@ -455,6 +456,8 @@ github.com/moby/sys/mountinfo
 github.com/modern-go/concurrent
 # github.com/modern-go/reflect2 v1.0.2
 github.com/modern-go/reflect2
+# github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826
+github.com/mohae/deepcopy
 # github.com/opencontainers/go-digest v1.0.0
 ## explicit
 github.com/opencontainers/go-digest
@@ -483,6 +486,8 @@ github.com/oracle/oci-go-sdk/v54/identity
 github.com/oracle/oci-go-sdk/v54/objectstorage
 github.com/oracle/oci-go-sdk/v54/objectstorage/transfer
 github.com/oracle/oci-go-sdk/v54/workrequests
+# github.com/perimeterx/marshmallow v1.1.4
+github.com/perimeterx/marshmallow
 # github.com/pkg/errors v0.9.1
 github.com/pkg/errors
 # github.com/pmezard/go-difflib v1.0.0
@@ -528,7 +533,7 @@ github.com/spf13/cobra
 github.com/spf13/pflag
 # github.com/stefanberger/go-pkcs11uri v0.0.0-20201008174630-78d3cae3a980
 github.com/stefanberger/go-pkcs11uri
-# github.com/stretchr/testify v1.8.0
+# github.com/stretchr/testify v1.8.1
 ## explicit
 github.com/stretchr/testify/assert
 github.com/stretchr/testify/require
