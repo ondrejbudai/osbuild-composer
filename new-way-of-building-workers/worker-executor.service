@@ -1,0 +1,13 @@
+[Unit]
+Description=Worker Executor Service
+ConditionPathExists=/tmp/worker-run-executor-service
+Wants=cloud-final.service
+After=cloud-final.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/libexec/worker-initialization-scripts/set_executor_hostname.sh
+ExecStart=/usr/local/libexec/worker-initialization-scripts/worker_executor.sh
+
+[Install]
+WantedBy=cloud-init.target

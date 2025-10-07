@@ -1,0 +1,43 @@
+FROM registry.access.redhat.com/ubi9/ubi:latest AS osbuild-composer-builder
+RUN dnf upgrade -y && dnf install -y rpm-build dnf-plugins-core git-core createrepo_c
+ARG OSBUILD_COMPOSER_COMMIT
+RUN git clone --depth 1 https://github.com/osbuild/osbuild-composer.git /osbuild-composer && \
+    cd /osbuild-composer && \
+    git checkout $OSBUILD_COMPOSER_COMMIT && \
+    dnf builddep -y osbuild-composer.spec && \
+    make rpm && \
+    mv /osbuild-composer/rpmbuild/RPMS/* /repo && \
+    createrepo_c /repo
+
+FROM registry.access.redhat.com/ubi9/ubi:latest AS osbuild-builder
+RUN dnf upgrade -y && dnf install -y rpm-build dnf-plugins-core git-core createrepo_c
+ARG OSBUILD_COMMIT
+RUN git clone --depth 1 https://github.com/osbuild/osbuild.git /osbuild && \
+    cd /osbuild && \
+    git checkout $OSBUILD_COMMIT && \
+    dnf builddep -y osbuild.spec && \
+    make rpm && \
+    mv /osbuild/rpmbuild/RPMS/* /repo && \
+    createrepo_c /repo
+
+FROM registry.redhat.io/rhel9/rhel-bootc:9.6
+COPY ./timber-vector.repo /etc/yum.repos.d/
+COPY ./worker-initialization-scripts /usr/local/libexec/worker-initialization-scripts
+COPY ./worker-executor.service /usr/lib/systemd/system/worker-executor.service
+COPY ./worker-initialization.service /usr/lib/systemd/system/worker-initialization.service
+COPY ./osbuild-worker.toml /etc/osbuild-worker/osbuild-worker.toml
+RUN dnf upgrade -y && \
+    dnf install -y jq unzip vector && \
+    curl -Ls https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip -o awscli.zip && \
+    unzip awscli.zip && \
+    ./aws/install && \
+    rm -rf awscli.zip aws && \
+    systemctl enable worker-initialization.service && \
+    systemctl enable worker-executor.service
+
+RUN --mount=type=bind,from=osbuild-composer-builder,source=/repo,target=/run/osbuild-composer \
+    --mount=type=bind,from=osbuild-builder,source=/repo,target=/run/osbuild \
+    bash -c 'echo -e "[osbuild-composer]\nname=osbuild-composer\nbaseurl=file:///run/osbuild-composer/\nenabled=1\ngpgcheck=0" > /etc/yum.repos.d/osbuild-composer.repo && \
+    echo -e "[osbuild]\nname=osbuild\nbaseurl=file:///run/osbuild\nenabled=1\ngpgcheck=0" > /etc/yum.repos.d/osbuild.repo && \
+    dnf install -y osbuild-composer-worker && \
+    rm -f /etc/yum.repos.d/osbuild-composer.repo /etc/yum.repos.d/osbuild.repo'

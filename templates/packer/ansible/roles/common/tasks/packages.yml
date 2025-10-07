@@ -1,5 +1,4 @@
 ---
-
 - name: Add osbuild-composer repository
   tags:
     - ci
@@ -90,8 +89,8 @@
     path: "{{ item }}"
     state: directory
   with_items:
-  - /tmp/rpmbuild
-  - /tmp/rpmbuild/RPMS
+    - /tmp/rpmbuild
+    - /tmp/rpmbuild/RPMS
 
 - name: Push rpms
   tags:
